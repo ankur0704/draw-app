@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -b",
-    "dev": "npm run build && npm run start",
+    "dev": "tsx watch src/index.ts",
     "start": "node dist/index.js"
   },
   "devdependencies": {
@@ -21,6 +21,7 @@
     "ws": "^8.19.0"
   },
   "devDependencies": {
-    "jsonwebtoken": "^9.0.3"
+    "jsonwebtoken": "^9.0.3",
+    "tsx": "^4.21.0"
   }
 }

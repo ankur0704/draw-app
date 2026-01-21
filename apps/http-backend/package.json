@@ -5,26 +5,23 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -b",
-    "dev": "npm run build && npm run start",
+    "dev": "tsx watch src/index.ts",
     "start": "node dist/index.js"
   },
   "devDependencies": {
-    "@repo/typescript-config": "workspace:*",
-    "@types/express": "^5.0.6"
+    "@types/express": "^5.0.6",
+    "tsx": "^4.21.0"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "@types/jsonwebtoken": "^9.0.10",
-    "express": "^5.2.1",
-    "jsonwebtoken": "^9.0.3",
     "@repo/backend-common": "workspace:*",
     "@repo/common": "workspace:*",
-    "@repo/db":"workspace:*"
-  },
-  "devDependencies": {
-    "@types/express": "^5.0.6"
+    "@repo/db": "workspace:*",
+    "@types/jsonwebtoken": "^9.0.10",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3"
   }
 }
