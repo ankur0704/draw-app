@@ -8,19 +8,19 @@
     "dev": "tsx watch src/index.ts",
     "start": "node dist/index.js"
   },
-  "devdependencies": {
-    "@repo/typescript-config": "workspace:*",
-    "@repo/backend-common": "workspace:*"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@repo/db": "workspace:*",
     "@types/ws": "^8.18.1",
     "ws": "^8.19.0"
   },
   "devDependencies": {
+    "@repo/backend-common": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/jsonwebtoken": "^9.0.10",
     "jsonwebtoken": "^9.0.3",
     "tsx": "^4.21.0"
   }
