@@ -7,11 +7,15 @@ import { Canvas } from "./Canvas";
 
 export function RoomCanvas({ roomId }: { roomId: string }) {
     const [socket, setSocket] = useState<WebSocket | null>(null);
+    const [unauthorized, setUnauthorized] = useState(false);
 
     useEffect(() => {
-        const ws = new WebSocket(`${WS_URL}?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4NGRlMzU1My0yNThmLTQ3YmMtODdlYy1iYTI5MWIwODg0YmEiLCJpYXQiOjE3MzcyMTczMjF9.b2Q3B-RUDAV0equhOjET7Hyl1AQaBf1FW4szk6mvGxU`)
-
-        //need to change token here since we dont have signin signup setup in our FE
+        const token = localStorage.getItem("token");
+        if (!token) {
+            setUnauthorized(true);
+            return;
+        }
+        const ws = new WebSocket(`${WS_URL}?token=${token}`)
 
         ws.onopen = () => {
             setSocket(ws);
@@ -23,7 +27,25 @@ export function RoomCanvas({ roomId }: { roomId: string }) {
             ws.send(data)
         }
 
-    }, [])
+        ws.onclose = () => {
+            setSocket(null);
+        }
+
+        ws.onerror = (error) => {
+            console.error("WebSocket error:", error);
+        }
+
+        return () => {
+            ws.close();
+        }
+
+    }, [roomId])
+
+    if (unauthorized) {
+        return <div>
+            You need to sign in to access this page. <a href="/signin">Sign in</a>
+        </div>
+    }
 
     if (!socket) {
         return <div>

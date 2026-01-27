@@ -80,16 +80,21 @@ wss.on('connection', function connection(ws, request) {
             const roomId = parsedData.roomId;
             const message = parsedData.message;
 
-            await prismaClient.chat.create({
-                data: {
-                    roomId: Number(roomId),
-                    message,
-                    userId
-                }
-            });
+            try {
+                await prismaClient.chat.create({
+                    data: {
+                        roomId: Number(roomId),
+                        message,
+                        userId
+                    }
+                });
+            } catch (e) {
+                console.error("Error writing to DB:", e);
+                // Continue to broadcast even if DB write fails (e.g. invalid room ID)
+            }
 
             users.forEach(user => {
-                if (user.rooms.includes(roomId)) {
+                if (user.rooms.includes(roomId) && user.ws.readyState === WebSocket.OPEN) {
                     user.ws.send(JSON.stringify({
                         type: "chat",
                         message: message,
